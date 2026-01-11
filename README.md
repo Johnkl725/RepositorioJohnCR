@@ -1,6 +1,8 @@
 # Portfolio de John Luis Castillo - Aplicación Full Stack
+
 [![Docker Image CI](https://github.com/Johnkl725/RepositorioJohnCR/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Johnkl725/RepositorioJohnCR/actions/workflows/docker-image.yml)
 [![Code Quality](https://github.com/Johnkl725/RepositorioJohnCR/actions/workflows/code-quality.yml/badge.svg)](https://github.com/Johnkl725/RepositorioJohnCR/actions/workflows/code-quality.yml)
+
 ## 🚀 Arquitectura del Proyecto
 
 ### Stack Tecnológico
