@@ -1,0 +1,33 @@
+services:
+  # Backend API
+  - type: web
+    name: portfolio-backend
+    runtime: docker
+    dockerfilePath: ./backend/Dockerfile
+    dockerContext: ./backend
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 5000
+      - key: MONGO_URI
+        sync: false  # Lo configuras manualmente en el dashboard
+      - key: CORS_ORIGIN
+        sync: false  # URL del frontend en Render
+      - key: RATE_LIMIT_WINDOW_MS
+        value: 900000
+      - key: RATE_LIMIT_MAX_REQUESTS
+        value: 100
+    healthCheckPath: /health
+
+  # Frontend Next.js
+  - type: web
+    name: portfolio-frontend
+    runtime: docker
+    dockerfilePath: ./frontend/Dockerfile
+    dockerContext: ./frontend
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        sync: false  # URL del backend en Render
+      - key: NODE_ENV
+        value: production
