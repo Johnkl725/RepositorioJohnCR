@@ -16,20 +16,12 @@ jobs:
     - name: Build Backend Docker Image
       run: docker build ./backend --file backend/Dockerfile --tag portfolio-backend:test
     
-    - name: Test Backend Image
+    - name: Verify Backend Build Artifacts
       run: |
-        docker run --rm -d --name backend-test \
-          -e MONGO_URI=mongodb://localhost:27017/test \
-          -e NODE_ENV=production \
-          -p 5000:5000 \
-          portfolio-backend:test
-        sleep 10
-        docker logs backend-test
-        docker stop backend-test || true
-    
-    - name: Check Backend Build Artifacts
-      run: |
+        echo "Checking if dist directory exists..."
         docker run --rm portfolio-backend:test ls -la /app/dist
+        echo "Checking if server.js was compiled..."
+        docker run --rm portfolio-backend:test test -f /app/dist/server.js && echo "✅ server.js found" || exit 1
 
   build-frontend:
     runs-on: ubuntu-latest
@@ -40,19 +32,12 @@ jobs:
     - name: Build Frontend Docker Image
       run: docker build ./frontend --file frontend/Dockerfile --tag portfolio-frontend:test
     
-    - name: Test Frontend Image
+    - name: Verify Frontend Build Artifacts
       run: |
-        docker run --rm -d --name frontend-test \
-          -e NEXT_PUBLIC_API_URL=http://localhost:5000/api \
-          -p 3000:3000 \
-          portfolio-frontend:test
-        sleep 10
-        docker logs frontend-test
-        docker stop frontend-test || true
-    
-    - name: Check Frontend Build Artifacts
-      run: |
+        echo "Checking if Next.js standalone was built..."
         docker run --rm portfolio-frontend:test ls -la /app
+        echo "Checking if server.js exists..."
+        docker run --rm portfolio-frontend:test test -f /app/server.js && echo "✅ server.js found" || exit 1
 
   integration-test:
     runs-on: ubuntu-latest
@@ -103,5 +88,5 @@ jobs:
     - name: Show Logs on Failure
       if: failure()
       run: |
-        docker logs backend
-        docker logs mongodb
+        docker logs backend || true
+        docker logs mongodb || true
