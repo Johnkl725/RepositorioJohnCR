@@ -81,7 +81,7 @@ jobs:
     - name: Test Backend API Endpoints
       run: |
         curl -f http://localhost:5000/api/profile || exit 1
-        curl -f http://localhost:5000/api/experiences || exit 1
+        curl -f http://localhost:5000/api/experience || exit 1
         curl -f http://localhost:5000/api/projects || exit 1
         curl -f http://localhost:5000/api/skills || exit 1
     
