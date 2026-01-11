@@ -3,6 +3,7 @@ services:
   - type: web
     name: portfolio-backend
     runtime: docker
+    plan: free
     dockerfilePath: ./backend/Dockerfile
     dockerContext: ./backend
     envVars:
@@ -24,6 +25,7 @@ services:
   - type: web
     name: portfolio-frontend
     runtime: docker
+    plan: free
     dockerfilePath: ./frontend/Dockerfile
     dockerContext: ./frontend
     envVars:
