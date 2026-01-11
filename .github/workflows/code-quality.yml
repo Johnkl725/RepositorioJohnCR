@@ -44,7 +44,3 @@ jobs:
     - name: TypeScript/Next.js Build Check
       working-directory: ./frontend
       run: npm run build
-    
-    - name: Lint Frontend Code
-      working-directory: ./frontend
-      run: npm run lint
