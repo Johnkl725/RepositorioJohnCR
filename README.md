@@ -68,11 +68,6 @@ NODE_ENV=production
 CORS_ORIGIN=http://localhost:3000
 RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX_REQUESTS=100
-
-# JWT Authentication
-JWT_SECRET=your-super-secret-jwt-key-here
-ADMIN_USERNAME=admin
-ADMIN_PASSWORD_HASH=$2a$10$fgL/EF1eQ8irQY26R6F7Ne/pu9.bcMLfgfrtwIah/YTuvYcuQxPmS
 ```
 
 **Frontend (.env.local)**
