@@ -6,30 +6,32 @@ import authService from '@/services/authService';
 import { apiClient } from '@/services/api';
 
 interface Profile {
-  name: string;
+  fullName: string;
   title: string;
   bio: string;
+  summary: string;
   email: string;
   phone: string;
   location: string;
-  website?: string;
-  github?: string;
-  linkedin?: string;
+  profileImageUrl?: string;
+  githubUrl?: string;
+  linkedinUrl?: string;
 }
 
 export default function ProfileAdmin() {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [formData, setFormData] = useState({
-    name: '',
+    fullName: '',
     title: '',
     bio: '',
+    summary: '',
     email: '',
     phone: '',
     location: '',
-    website: '',
-    github: '',
-    linkedin: ''
+    profileImageUrl: '',
+    githubUrl: '',
+    linkedinUrl: ''
   });
   const router = useRouter();
 
@@ -52,15 +54,16 @@ export default function ProfileAdmin() {
       const data = response.data.data;
       setProfile(data);
       setFormData({
-        name: data.name || '',
+        fullName: data.fullName || '',
         title: data.title || '',
         bio: data.bio || '',
+        summary: data.summary || '',
         email: data.email || '',
         phone: data.phone || '',
         location: data.location || '',
-        website: data.website || '',
-        github: data.github || '',
-        linkedin: data.linkedin || ''
+        profileImageUrl: data.profileImageUrl || '',
+        githubUrl: data.githubUrl || '',
+        linkedinUrl: data.linkedinUrl || ''
       });
     } catch (error) {
       console.error('Error loading profile:', error);
@@ -118,8 +121,8 @@ export default function ProfileAdmin() {
                 <label className="block text-sm font-medium mb-2">Nombre completo</label>
                 <input
                   type="text"
-                  value={formData.name}
-                  onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  value={formData.fullName}
+                  onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
                   className="bg-gray-700 rounded px-4 py-2 w-full"
                   required
                 />
@@ -138,12 +141,24 @@ export default function ProfileAdmin() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium mb-2">Biografía</label>
+              <label className="block text-sm font-medium mb-2">Biografía (max 500 caracteres)</label>
               <textarea
                 value={formData.bio}
                 onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
                 className="bg-gray-700 rounded px-4 py-2 w-full h-32"
+                maxLength={500}
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium mb-2">Resumen profesional (max 2000 caracteres) *</label>
+              <textarea
+                value={formData.summary}
+                onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
+                className="bg-gray-700 rounded px-4 py-2 w-full h-40"
+                maxLength={2000}
                 required
+                placeholder="Describe tu experiencia, habilidades y objetivos profesionales..."
               />
             </div>
 
@@ -166,7 +181,6 @@ export default function ProfileAdmin() {
                   value={formData.phone}
                   onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                   className="bg-gray-700 rounded px-4 py-2 w-full"
-                  required
                 />
               </div>
             </div>
@@ -183,15 +197,15 @@ export default function ProfileAdmin() {
             </div>
 
             <div className="border-t border-gray-700 pt-6">
-              <h3 className="text-lg font-semibold mb-4">Redes Sociales (Opcional)</h3>
+              <h3 className="text-lg font-semibold mb-4">Enlaces y Redes Sociales (Opcional)</h3>
               
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium mb-2">Sitio web</label>
+                  <label className="block text-sm font-medium mb-2">Foto de perfil (URL)</label>
                   <input
                     type="url"
-                    value={formData.website}
-                    onChange={(e) => setFormData({ ...formData, website: e.target.value })}
+                    value={formData.profileImageUrl}
+                    onChange={(e) => setFormData({ ...formData, profileImageUrl: e.target.value })}
                     className="bg-gray-700 rounded px-4 py-2 w-full"
                     placeholder="https://..."
                   />
@@ -201,8 +215,8 @@ export default function ProfileAdmin() {
                   <label className="block text-sm font-medium mb-2">GitHub</label>
                   <input
                     type="url"
-                    value={formData.github}
-                    onChange={(e) => setFormData({ ...formData, github: e.target.value })}
+                    value={formData.githubUrl}
+                    onChange={(e) => setFormData({ ...formData, githubUrl: e.target.value })}
                     className="bg-gray-700 rounded px-4 py-2 w-full"
                     placeholder="https://github.com/..."
                   />
@@ -212,8 +226,8 @@ export default function ProfileAdmin() {
                   <label className="block text-sm font-medium mb-2">LinkedIn</label>
                   <input
                     type="url"
-                    value={formData.linkedin}
-                    onChange={(e) => setFormData({ ...formData, linkedin: e.target.value })}
+                    value={formData.linkedinUrl}
+                    onChange={(e) => setFormData({ ...formData, linkedinUrl: e.target.value })}
                     className="bg-gray-700 rounded px-4 py-2 w-full"
                     placeholder="https://linkedin.com/in/..."
                   />
