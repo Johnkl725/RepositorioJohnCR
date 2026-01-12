@@ -111,8 +111,8 @@ export default function SkillsAdmin() {
   const resetForm = () => {
     setFormData({
       name: '',
-      category: '',
-      level: 50,
+      category: 'Lenguajes de Programación',
+      proficiency: 'Intermedio',
       yearsOfExperience: 1
     });
     setEditingId(null);
