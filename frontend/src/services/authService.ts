@@ -1,4 +1,4 @@
-import api from './api';
+import { apiClient } from './api';
 
 /**
  * Authentication Service
@@ -26,7 +26,7 @@ class AuthService {
    */
   async login(credentials: LoginCredentials): Promise<string> {
     try {
-      const response = await api.post<AuthResponse>('/auth/login', credentials);
+      const response = await apiClient.post<AuthResponse>('/auth/login', credentials);
       const token = response.data.data.token;
       
       // Store token in localStorage
@@ -85,7 +85,7 @@ class AuthService {
     }
 
     try {
-      await api.get('/auth/verify', {
+      await apiClient.get('/auth/verify', {
         headers: {
           Authorization: `Bearer ${token}`
         }
