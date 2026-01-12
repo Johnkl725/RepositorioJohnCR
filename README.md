@@ -18,11 +18,13 @@
 - ✅ **Dependency Injection**
 
 ### Características de Seguridad
+- 🛡️ **JWT Authentication**: Autenticación con tokens JWT para panel admin
 - 🛡️ **Rate Limiting**: Prevención de DDoS
 - 🛡️ **Helmet**: Protección de headers HTTP
-- 🛡️ **Input Validation**: Prevención de inyección SQL/NoSQL
+- 🛡️ **Input Validation**: Prevención de inyección SQL/NoSQL con Joi
 - 🛡️ **CORS**: Configuración segura de origen cruzado
 - 🛡️ **Sanitización**: Limpieza de datos de entrada
+- 🛡️ **Password Hashing**: Bcrypt para contraseñas seguras
 - 🛡️ **Environment Variables**: Gestión segura de credenciales
 
 ## 📁 Estructura del Proyecto
@@ -73,6 +75,11 @@ NODE_ENV=production
 CORS_ORIGIN=http://localhost:3000
 RATE_LIMIT_WINDOW_MS=900000
 RATE_LIMIT_MAX_REQUESTS=100
+
+# JWT Authentication
+JWT_SECRET=your-super-secret-jwt-key-here
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD_HASH=$2a$10$fgL/EF1eQ8irQY26R6F7Ne/pu9.bcMLfgfrtwIah/YTuvYcuQxPmS
 ```
 
 **Frontend (.env.local)**
@@ -88,9 +95,25 @@ docker-compose up -d
 ```
 
 ### Servicios disponibles
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
-- MongoDB: localhost:27017
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:5000
+- **Panel Admin**: http://localhost:3000/admin/login
+- **MongoDB**: localhost:27017
+
+### 🔐 Acceso al Panel de Administración
+
+Para gestionar el contenido del portfolio sin editar código:
+
+1. Accede a: http://localhost:3000/admin/login
+2. **Usuario**: `admin`
+3. **Contraseña**: `Admin2026Secure`
+
+Desde el panel puedes:
+- ✅ Editar perfil personal
+- ✅ Agregar/editar/eliminar experiencias laborales
+- ✅ Gestionar proyectos
+- ✅ Actualizar habilidades técnicas
+- ✅ Modificar información educativa
 
 ### Comandos útiles
 ```bash
@@ -146,22 +169,28 @@ npm run dev
 ### Experiencia
 - `GET /api/experience` - Listar todas las experiencias
 - `GET /api/experience/:id` - Obtener una experiencia
-- `POST /api/experience` - Crear experiencia
-- `PUT /api/experience/:id` - Actualizar experiencia
-- `DELETE /api/experience/:id` - Eliminar experiencia
+- `POST /api/experience` - Crear experiencia 🔒
+- `PUT /api/experience/:id` - Actualizar experiencia 🔒
+- `DELETE /api/experience/:id` - Eliminar experiencia 🔒
 
 ### Proyectos
 - `GET /api/projects` - Listar todos los proyectos
 - `GET /api/projects/:id` - Obtener un proyecto
-- `POST /api/projects` - Crear proyecto
-- `PUT /api/projects/:id` - Actualizar proyecto
-- `DELETE /api/projects/:id` - Eliminar proyecto
+- `POST /api/projects` - Crear proyecto 🔒
+- `PUT /api/projects/:id` - Actualizar proyecto 🔒
+- `DELETE /api/projects/:id` - Eliminar proyecto 🔒
 
 ### Habilidades
 - `GET /api/skills` - Listar todas las habilidades
-- `POST /api/skills` - Crear habilidad
-- `PUT /api/skills/:id` - Actualizar habilidad
-- `DELETE /api/skills/:id` - Eliminar habilidad
+- `POST /api/skills` - Crear habilidad 🔒
+- `PUT /api/skills/:id` - Actualizar habilidad 🔒
+- `DELETE /api/skills/:id` - Eliminar habilidad 🔒
+
+### Educación
+- `GET /api/education` - Listar educación
+- `POST /api/education` - Crear entrada 🔒
+- `PUT /api/education/:id` - Actualizar 🔒
+- `DELETE /api/education/:id` - Eliminar 🔒bilidad
 
 ### Educación
 - `GET /api/education` - Listar educación
@@ -207,16 +236,36 @@ npm run dev
 - Modifica `globals.css` para estilos globales
 
 ### Contenido
-- Los datos se gestionan desde MongoDB
-- Usa el seed script para cargar información inicial
-- Panel de administración (opcional) para editar desde UI
+- Lo🌐 Aplicación en Producción
 
-## 🚀 Despliegue a Producción
-
-### Recomendaciones
-- **Frontend**: Vercel, Netlify
-- **Backend**: Railway, Render, DigitalOcean
+- **Frontend**: https://portfolio-frontend-p0tz.onrender.com
+- **Backend API**: https://portfolio-backend-u3hg.onrender.com
+- **Panel Admin**: https://portfolio-frontend-p0tz.onrender.com/admin/login
 - **Base de Datos**: MongoDB Atlas
+
+### Stack de Producción
+- **Frontend**: Render (Docker)
+- **Backend**: Render (Docker)
+- **Base de Datos**: MongoDB Atlas
+- **CI/CD**: GitHub Actions
+- **Deployment**: Render Blueprint
+
+### Variables a configurar en producción
+```env
+NODE_ENV=production
+MONGO_URI=<tu_mongodb_atlas_uri>
+CORS_ORIGIN=<tu_dominio_frontend>
+JWT_SECRET=<tu_secret_key_segura>
+ADMIN_USERNAME=admin
+ADMIN_PASSWORD_HASH=<bcrypt_hash_de_tu_password>
+```
+
+### Generar Password Hash para Admin
+```bash
+cd backend
+npm run generate-password
+# Ingresa la contraseña cuando se solicite
+# Copia el hash generado a la variable ADMIN_PASSWORD_HASHs
 
 ### Variables a configurar en producción
 ```env

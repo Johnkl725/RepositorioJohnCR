@@ -52,6 +52,20 @@ Deberías ver tu portfolio completamente funcional con:
 - ✅ Educación
 - ✅ Información de contacto
 
+### 🔐 Panel de Administración
+
+Para editar el contenido sin tocar código:
+
+1. Ve a: **http://localhost:3000/admin/login**
+2. **Usuario**: `admin`
+3. **Contraseña**: `Admin2026Secure`
+4. Desde el panel puedes gestionar:
+   - Perfil personal
+   - Experiencias laborales
+   - Proyectos
+   - Habilidades
+   - Educación
+
 ## 🔍 Verificar Servicios
 
 ### Backend API
@@ -70,7 +84,18 @@ Abre http://localhost:3000 en tu navegador
 
 ## 📝 Actualizar Tu Información
 
-### Método 1: Editar Script Seed (Recomendado para desarrollo)
+### Método 1: Panel de Administración (Recomendado)
+
+La forma más fácil es usar el panel de administración:
+
+```
+1. Ve a http://localhost:3000/admin/login
+2. Inicia sesión con admin / Admin2026Secure
+3. Haz clic en la sección que quieras editar
+4. Usa los formularios para crear, editar o eliminar contenido
+```
+
+### Método 2: Editar Script Seed (Para datos iniciales)
 
 ```bash
 # 1. Edita el archivo seed con tu información
@@ -80,19 +105,33 @@ nano backend/src/scripts/seed.ts
 docker-compose exec backend npm run seed
 ```
 
-### Método 2: Usar la API directamente
+### Método 3: Usar la API directamente
 
+**Primero obtén un token JWT:**
+```bash
+curl -X POST http://localhost:5000/api/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{
+    "username": "admin",
+    "password": "Admin2026Secure"
+  }'
+# Copia el token de la respuesta
+```
+
+**Luego actualiza usando el token:**
 ```bash
 # Ejemplo: Actualizar perfil
 curl -X PUT http://localhost:5000/api/profile \
   -H "Content-Type: application/json" \
+  -H "Authorization: Bearer TU_TOKEN_AQUI" \
   -d '{
     "fullName": "Tu Nombre",
     "title": "Tu Título",
     "email": "tu@email.com",
     "phone": "123456789",
     "location": "Tu Ciudad",
-    "summary": "Tu resumen profesional..."
+    "summary": "Tu resumen profesional...",
+    "bio": "Tu biografía corta"
   }'
 ```
 
