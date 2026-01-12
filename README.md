@@ -10,13 +10,6 @@
 - **Containerización**: Docker & Docker Compose
 - **Seguridad**: Rate Limiting, Helmet, CORS, Validación de datos
 
-### Principios Aplicados
-- ✅ **SOLID Principles**
-- ✅ **Repository Pattern**
-- ✅ **Service Layer Pattern**
-- ✅ **DTO Pattern**
-- ✅ **Dependency Injection**
-
 ### Características de Seguridad
 - 🛡️ **JWT Authentication**: Autenticación con tokens JWT para panel admin
 - 🛡️ **Rate Limiting**: Prevención de DDoS
