@@ -9,13 +9,15 @@ interface Project {
   _id: string;
   title: string;
   description: string;
+  longDescription?: string;
   technologies: string[];
+  category: string;
   liveUrl?: string;
   githubUrl?: string;
   imageUrl?: string;
   featured: boolean;
-  startDate: string;
-  endDate?: string;
+  date: string;
+  highlights?: string[];
 }
 
 export default function ProjectsAdmin() {
@@ -26,13 +28,15 @@ export default function ProjectsAdmin() {
   const [formData, setFormData] = useState({
     title: '',
     description: '',
+    longDescription: '',
     technologies: '',
+    category: 'Data Engineering',
     liveUrl: '',
     githubUrl: '',
     imageUrl: '',
     featured: false,
-    startDate: '',
-    endDate: ''
+    date: '',
+    highlights: ''
   });
   const router = useRouter();
 
@@ -71,7 +75,8 @@ export default function ProjectsAdmin() {
 
     const data = {
       ...formData,
-      technologies: formData.technologies.split(',').map(t => t.trim()).filter(t => t)
+      technologies: formData.technologies.split(',').map(t => t.trim()).filter(t => t),
+      highlights: formData.highlights ? formData.highlights.split('\n').filter(h => h.trim()) : []
     };
 
     try {
@@ -98,13 +103,15 @@ export default function ProjectsAdmin() {
     setFormData({
       title: project.title,
       description: project.description,
+      longDescription: project.longDescription || '',
       technologies: project.technologies.join(', '),
+      category: project.category || 'Data Engineering',
       liveUrl: project.liveUrl || '',
       githubUrl: project.githubUrl || '',
       imageUrl: project.imageUrl || '',
       featured: project.featured,
-      startDate: project.startDate.split('T')[0],
-      endDate: project.endDate ? project.endDate.split('T')[0] : ''
+      date: project.date ? project.date.split('T')[0] : '',
+      highlights: project.highlights?.join('\n') || ''
     });
     setShowForm(true);
   };
@@ -132,13 +139,15 @@ export default function ProjectsAdmin() {
     setFormData({
       title: '',
       description: '',
+      longDescription: '',
       technologies: '',
+      category: 'Data Engineering',
       liveUrl: '',
       githubUrl: '',
       imageUrl: '',
       featured: false,
-      startDate: '',
-      endDate: ''
+      date: '',
+      highlights: ''
     });
     setEditingId(null);
     setShowForm(false);
@@ -186,20 +195,66 @@ export default function ProjectsAdmin() {
               />
               
               <textarea
-                placeholder="Descripción"
+                placeholder="Descripción corta (max 500 caracteres)"
                 value={formData.description}
                 onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                className="bg-gray-700 rounded px-4 py-2 w-full h-32"
+                className="bg-gray-700 rounded px-4 py-2 w-full h-24"
+                maxLength={500}
                 required
               />
 
+              <textarea
+                placeholder="Descripción detallada (opcional, max 2000 caracteres)"
+                value={formData.longDescription}
+                onChange={(e) => setFormData({ ...formData, longDescription: e.target.value })}
+                className="bg-gray-700 rounded px-4 py-2 w-full h-32"
+                maxLength={2000}
+              />
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm mb-2">Categoría *</label>
+                  <select
+                    value={formData.category}
+                    onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                    className="bg-gray-700 rounded px-4 py-2 w-full"
+                    required
+                  >
+                    <option value="Data Engineering">Data Engineering</option>
+                    <option value="Data Analysis">Data Analysis</option>
+                    <option value="Automation">Automation</option>
+                    <option value="Cloud">Cloud</option>
+                    <option value="Full Stack">Full Stack</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
+                
+                <div>
+                  <label className="block text-sm mb-2">Fecha del proyecto *</label>
+                  <input
+                    type="date"
+                    value={formData.date}
+                    onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                    className="bg-gray-700 rounded px-4 py-2 w-full"
+                    required
+                  />
+                </div>
+              </div>
+
               <input
                 type="text"
-                placeholder="Tecnologías (separadas por coma)"
+                placeholder="Tecnologías (separadas por coma) *"
                 value={formData.technologies}
                 onChange={(e) => setFormData({ ...formData, technologies: e.target.value })}
                 className="bg-gray-700 rounded px-4 py-2 w-full"
                 required
+              />
+
+              <textarea
+                placeholder="Puntos destacados (uno por línea, opcional)"
+                value={formData.highlights}
+                onChange={(e) => setFormData({ ...formData, highlights: e.target.value })}
+                className="bg-gray-700 rounded px-4 py-2 w-full h-24"
               />
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -226,22 +281,6 @@ export default function ProjectsAdmin() {
                 onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
                 className="bg-gray-700 rounded px-4 py-2 w-full"
               />
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input
-                  type="date"
-                  value={formData.startDate}
-                  onChange={(e) => setFormData({ ...formData, startDate: e.target.value })}
-                  className="bg-gray-700 rounded px-4 py-2"
-                  required
-                />
-                <input
-                  type="date"
-                  value={formData.endDate}
-                  onChange={(e) => setFormData({ ...formData, endDate: e.target.value })}
-                  className="bg-gray-700 rounded px-4 py-2"
-                />
-              </div>
 
               <label className="flex items-center space-x-2">
                 <input
