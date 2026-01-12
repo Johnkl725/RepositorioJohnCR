@@ -7,7 +7,7 @@ import { apiClient } from '@/services/api';
 
 interface Experience {
   _id: string;
-  title: string;
+  position: string;
   company: string;
   location: string;
   startDate: string;
@@ -24,7 +24,7 @@ export default function ExperienceAdmin() {
   const [showForm, setShowForm] = useState(false);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
-    title: '',
+    position: '',
     company: '',
     location: '',
     startDate: '',
@@ -98,7 +98,7 @@ export default function ExperienceAdmin() {
   const handleEdit = (exp: Experience) => {
     setEditingId(exp._id);
     setFormData({
-      title: exp.title,
+      position: exp.position,
       company: exp.company,
       location: exp.location,
       startDate: exp.startDate.split('T')[0],
@@ -133,7 +133,7 @@ export default function ExperienceAdmin() {
 
   const resetForm = () => {
     setFormData({
-      title: '',
+      position: '',
       company: '',
       location: '',
       startDate: '',
@@ -188,8 +188,8 @@ export default function ExperienceAdmin() {
                 <input
                   type="text"
                   placeholder="Título del puesto"
-                  value={formData.title}
-                  onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                  value={formData.position}
+                  onChange={(e) => setFormData({ ...formData, position: e.target.value })}
                   className="bg-gray-700 rounded px-4 py-2"
                   required
                 />
@@ -287,7 +287,7 @@ export default function ExperienceAdmin() {
             <div key={exp._id} className="bg-gray-800 rounded-lg p-6">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-xl font-bold">{exp.title}</h3>
+                  <h3 className="text-xl font-bold">{exp.position}</h3>
                   <p className="text-gray-400">{exp.company} • {exp.location}</p>
                   <p className="text-sm text-gray-500">
                     {new Date(exp.startDate).toLocaleDateString()} - 

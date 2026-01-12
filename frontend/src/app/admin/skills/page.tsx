@@ -9,7 +9,7 @@ interface Skill {
   _id: string;
   name: string;
   category: string;
-  level: number;
+  proficiency: string;
   yearsOfExperience: number;
 }
 
@@ -20,8 +20,8 @@ export default function SkillsAdmin() {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     name: '',
-    category: '',
-    level: 50,
+    category: 'Lenguajes de Programación',
+    proficiency: 'Intermedio',
     yearsOfExperience: 1
   });
   const router = useRouter();
@@ -83,7 +83,7 @@ export default function SkillsAdmin() {
     setFormData({
       name: skill.name,
       category: skill.category,
-      level: skill.level,
+      proficiency: skill.proficiency,
       yearsOfExperience: skill.yearsOfExperience
     });
     setShowForm(true);
@@ -166,26 +166,34 @@ export default function SkillsAdmin() {
                   className="bg-gray-700 rounded px-4 py-2"
                   required
                 />
-                <input
-                  type="text"
-                  placeholder="Categoría (ej: Backend, Frontend)"
+                <select
                   value={formData.category}
                   onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                   className="bg-gray-700 rounded px-4 py-2"
                   required
-                />
+                >
+                  <option value="Lenguajes de Programación">Lenguajes de Programación</option>
+                  <option value="Bases de Datos">Bases de Datos</option>
+                  <option value="Cloud & Big Data">Cloud & Big Data</option>
+                  <option value="Herramientas">Herramientas</option>
+                  <option value="BI & Visualización">BI & Visualización</option>
+                  <option value="Otros">Otros</option>
+                </select>
               </div>
 
               <div>
-                <label className="block mb-2">Nivel de dominio: {formData.level}%</label>
-                <input
-                  type="range"
-                  min="0"
-                  max="100"
-                  value={formData.level}
-                  onChange={(e) => setFormData({ ...formData, level: parseInt(e.target.value) })}
-                  className="w-full"
-                />
+                <label className="block mb-2">Nivel de dominio</label>
+                <select
+                  value={formData.proficiency}
+                  onChange={(e) => setFormData({ ...formData, proficiency: e.target.value })}
+                  className="bg-gray-700 rounded px-4 py-2 w-full"
+                  required
+                >
+                  <option value="Básico">Básico</option>
+                  <option value="Intermedio">Intermedio</option>
+                  <option value="Avanzado">Avanzado</option>
+                  <option value="Experto">Experto</option>
+                </select>
               </div>
 
               <div>
@@ -221,15 +229,7 @@ export default function SkillsAdmin() {
                 {categorySkills.map((skill) => (
                   <div key={skill._id} className="bg-gray-800 rounded-lg p-4">
                     <h3 className="text-lg font-semibold mb-2">{skill.name}</h3>
-                    <div className="mb-2">
-                      <div className="bg-gray-700 rounded-full h-2">
-                        <div
-                          className="bg-purple-600 h-2 rounded-full"
-                          style={{ width: `${skill.level}%` }}
-                        />
-                      </div>
-                      <p className="text-sm text-gray-400 mt-1">{skill.level}% de dominio</p>
-                    </div>
+                    <p className="text-sm text-purple-400 mb-2">Nivel: {skill.proficiency}</p>
                     <p className="text-sm text-gray-400 mb-3">{skill.yearsOfExperience} años de experiencia</p>
                     <div className="flex space-x-2">
                       <button
