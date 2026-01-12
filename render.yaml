@@ -28,9 +28,11 @@ services:
     plan: free
     dockerfilePath: ./frontend/Dockerfile
     dockerContext: ./frontend
-    dockerCommand: docker build --build-arg NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL -f ./Dockerfile .
+    buildFilter:
+      paths:
+        - frontend/**
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        sync: false  # URL del backend en Render
+        value: https://portfolio-backend-u3hg.onrender.com/api
       - key: NODE_ENV
         value: production
