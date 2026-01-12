@@ -20,6 +20,7 @@ import {
 import { errorHandler, AppError } from './middlewares/errorHandler';
 
 // Routes
+import authRoutes from './routes/authRoutes';
 import experienceRoutes from './routes/experienceRoutes';
 import projectRoutes from './routes/projectRoutes';
 import educationRoutes from './routes/educationRoutes';
@@ -92,6 +93,7 @@ class Server {
     });
 
     // API routes
+    this.app.use('/api/auth', authRoutes);
     this.app.use('/api/experience', experienceRoutes);
     this.app.use('/api/projects', projectRoutes);
     this.app.use('/api/education', educationRoutes);

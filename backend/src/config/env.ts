@@ -14,6 +14,9 @@ interface EnvConfig {
   corsOrigin: string;
   rateLimitWindowMs: number;
   rateLimitMaxRequests: number;
+  jwtSecret: string;
+  adminUsername: string;
+  adminPasswordHash: string;
 }
 
 class EnvironmentConfig {
@@ -40,11 +43,14 @@ class EnvironmentConfig {
       corsOrigin: process.env.CORS_ORIGIN || 'http://localhost:3000',
       rateLimitWindowMs: parseInt(process.env.RATE_LIMIT_WINDOW_MS || '900000', 10),
       rateLimitMaxRequests: parseInt(process.env.RATE_LIMIT_MAX_REQUESTS || '100', 10),
+      jwtSecret: process.env.JWT_SECRET || 'development-secret-key-change-in-production',
+      adminUsername: process.env.ADMIN_USERNAME || 'admin',
+      adminPasswordHash: process.env.ADMIN_PASSWORD_HASH || '',
     };
   }
 
   private validateConfig(): void {
-    const required = ['mongoUri'];
+    const required = ['mongoUri', 'jwtSecret', 'adminUsername', 'adminPasswordHash'];
     const missing = required.filter(key => !this.config[key as keyof EnvConfig]);
 
     if (missing.length > 0) {
@@ -56,6 +62,18 @@ class EnvironmentConfig {
     return { ...this.config };
   }
 
+  public get JWT_SECRET(): string {
+    return this.config.jwtSecret;
+  }
+
+  public get ADMIN_USERNAME(): string {
+    return this.config.adminUsername;
+  }
+
+  public get ADMIN_PASSWORD_HASH(): string {
+    return this.config.adminPasswordHash;
+  }
+
   public isDevelopment(): boolean {
     return this.config.nodeEnv === 'development';
   }
@@ -65,4 +83,5 @@ class EnvironmentConfig {
   }
 }
 
-export default EnvironmentConfig.getInstance();
+export const env = EnvironmentConfig.getInstance();
+export default env;
