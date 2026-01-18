@@ -2,6 +2,7 @@
 
 import { Education as EducationType } from '@/types';
 import { FaGraduationCap, FaMapMarkerAlt, FaCalendarAlt, FaTrophy } from 'react-icons/fa';
+import { formatDateLimaShort } from '@/utils/dateUtils';
 
 interface EducationProps {
   education: EducationType[];
@@ -9,7 +10,7 @@ interface EducationProps {
 
 export default function Education({ education }: EducationProps) {
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('es-ES', { month: 'short', year: 'numeric' });
+    return formatDateLimaShort(date);
   };
 
   return (

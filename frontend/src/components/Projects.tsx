@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Project } from '@/types';
 import { FaGithub, FaExternalLinkAlt, FaCalendarAlt, FaTag } from 'react-icons/fa';
+import { formatDateLima } from '@/utils/dateUtils';
 
 interface ProjectsProps {
   projects: Project[];
@@ -18,7 +19,7 @@ export default function Projects({ projects }: ProjectsProps) {
     : projects.filter(p => p.category === selectedCategory);
 
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('es-ES', { month: 'long', year: 'numeric' });
+    return formatDateLima(date, { month: 'long', year: 'numeric' });
   };
 
   return (
@@ -34,11 +35,10 @@ export default function Projects({ projects }: ProjectsProps) {
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-4 py-2 rounded-lg font-medium transition ${
-                selectedCategory === category
+              className={`px-4 py-2 rounded-lg font-medium transition ${selectedCategory === category
                   ? 'bg-blue-600 text-white shadow-lg'
                   : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-700'
-              }`}
+                }`}
             >
               {category === 'all' ? 'Todos' : category}
             </button>

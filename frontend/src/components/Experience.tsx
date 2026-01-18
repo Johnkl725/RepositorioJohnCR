@@ -2,6 +2,7 @@
 
 import { Experience as ExperienceType } from '@/types';
 import { FaBriefcase, FaMapMarkerAlt, FaCalendarAlt } from 'react-icons/fa';
+import { formatDateLimaShort } from '@/utils/dateUtils';
 
 interface ExperienceProps {
   experiences: ExperienceType[];
@@ -9,7 +10,7 @@ interface ExperienceProps {
 
 export default function Experience({ experiences }: ExperienceProps) {
   const formatDate = (date: string) => {
-    return new Date(date).toLocaleDateString('es-ES', { month: 'short', year: 'numeric' });
+    return formatDateLimaShort(date);
   };
 
   return (

@@ -18,6 +18,7 @@ const profileData = {
   location: 'Lima, Perú',
   bio: 'Practicante de Data Engineering en Pacífico Seguros con pasión por Big Data y automatización.',
   summary: `Estudiante de Ingeniería de Sistemas (VIII Ciclo, Décimo Superior) en la UNMSM. Actualmente desempeñándome como Practicante de Data Engineering en Pacífico Seguros. Cuento con una sólida base teórica y práctica en SQL y Python, reforzada con proyectos académicos en entornos Cloud (Azure Data Factory, Azure Databricks) y on-premise como SSIS. Me caracterizo por ser autodidacta y tener una alta motivación por aprender nuevas tecnologías de Big Data y automatización. Busco consolidar mis conocimientos técnicos contribuyendo activamente en equipos de ingeniería de datos.`,
+  profileImageUrl: 'https://res.cloudinary.com/dbmyhjhzq/image/upload/v1768752682/1740776197775_upgwll.jpg',
   linkedinUrl: '', // Agregar tu LinkedIn
   githubUrl: '', // Agregar tu GitHub
   languages: [
@@ -185,24 +186,24 @@ const skillsData = [
   // Lenguajes de Programación
   { name: 'Python', category: 'Lenguajes de Programación', proficiency: 'Intermedio', order: 1 },
   { name: 'SQL', category: 'Lenguajes de Programación', proficiency: 'Avanzado', order: 2 },
-  
+
   // Bases de Datos
   { name: 'SQL Server', category: 'Bases de Datos', proficiency: 'Avanzado', order: 3 },
   { name: 'MongoDB', category: 'Bases de Datos', proficiency: 'Básico', order: 4 },
-  
+
   // Cloud & Big Data
   { name: 'Azure Data Factory', category: 'Cloud & Big Data', proficiency: 'Intermedio', order: 5 },
   { name: 'Azure Databricks', category: 'Cloud & Big Data', proficiency: 'Intermedio', order: 6 },
   { name: 'PySpark', category: 'Cloud & Big Data', proficiency: 'Básico', order: 7 },
   { name: 'Apache Airflow', category: 'Cloud & Big Data', proficiency: 'Básico', order: 8 },
-  
+
   // Herramientas
   { name: 'Git', category: 'Herramientas', proficiency: 'Intermedio', order: 9 },
   { name: 'Excel', category: 'Herramientas', proficiency: 'Avanzado', order: 10 },
   { name: 'SSIS', category: 'Herramientas', proficiency: 'Intermedio', order: 11 },
   { name: 'Power Automate', category: 'Herramientas', proficiency: 'Básico', order: 12 },
   { name: 'Pandas', category: 'Herramientas', proficiency: 'Intermedio', order: 13 },
-  
+
   // BI & Visualización
   { name: 'Power BI', category: 'BI & Visualización', proficiency: 'Intermedio', order: 14 },
 ];
