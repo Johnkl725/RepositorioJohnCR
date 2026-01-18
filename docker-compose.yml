@@ -35,6 +35,9 @@ services:
       CORS_ORIGIN: http://localhost:3000
       RATE_LIMIT_WINDOW_MS: 900000
       RATE_LIMIT_MAX_REQUESTS: 100
+      JWT_SECRET: your-secret-jwt-key-change-this-in-production-2026
+      ADMIN_USERNAME: admin
+      ADMIN_PASSWORD_HASH: $$2b$$10$$YVJwdWI4QnJEWmNkRkpPYU92SjZvUldUV1BEU0JZYnQ2QzBhMGlmQXVl
     depends_on:
       mongodb:
         condition: service_healthy

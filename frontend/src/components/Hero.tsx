@@ -2,21 +2,36 @@
 
 import { Profile } from '@/types';
 import { FaLinkedin, FaGithub, FaEnvelope, FaPhone, FaMapMarkerAlt } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface HeroProps {
   profile: Profile;
 }
 
 export default function Hero({ profile }: HeroProps) {
+  const initials = profile.fullName.split(' ').map(n => n[0]).slice(0, 2).join('');
+
   return (
     <section id="hero" className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <div className="text-center">
-          {/* Profile Image Placeholder */}
+          {/* Profile Image */}
           <div className="mb-8 flex justify-center">
-            <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-5xl font-bold shadow-xl">
-              {profile.fullName.split(' ').map(n => n[0]).slice(0, 2).join('')}
-            </div>
+            {profile.profileImageUrl ? (
+              <div className="relative w-32 h-32 rounded-full overflow-hidden shadow-2xl ring-4 ring-blue-500">
+                <Image
+                  src={profile.profileImageUrl}
+                  alt={profile.fullName}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            ) : (
+              <div className="w-32 h-32 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-5xl font-bold shadow-xl">
+                {initials}
+              </div>
+            )}
           </div>
 
           {/* Name and Title */}

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import authService from '@/services/authService';
 import { apiClient } from '@/services/api';
+import { formatDateLimaNumeric } from '@/utils/dateUtils';
 
 interface Experience {
   _id: string;
@@ -62,7 +63,7 @@ export default function ExperienceAdmin() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     const token = authService.getToken();
     if (!token) {
       router.push('/admin/login');
@@ -86,7 +87,7 @@ export default function ExperienceAdmin() {
           headers: { Authorization: `Bearer ${token}` }
         });
       }
-      
+
       resetForm();
       loadExperiences();
     } catch (error) {
@@ -113,7 +114,7 @@ export default function ExperienceAdmin() {
 
   const handleDelete = async (id: string) => {
     if (!confirm('¿Estás seguro de eliminar esta experiencia?')) return;
-    
+
     const token = authService.getToken();
     if (!token) {
       router.push('/admin/login');
@@ -227,7 +228,7 @@ export default function ExperienceAdmin() {
                   )}
                 </div>
               </div>
-              
+
               <label className="flex items-center space-x-2">
                 <input
                   type="checkbox"
@@ -290,8 +291,8 @@ export default function ExperienceAdmin() {
                   <h3 className="text-xl font-bold">{exp.position}</h3>
                   <p className="text-gray-400">{exp.company} • {exp.location}</p>
                   <p className="text-sm text-gray-500">
-                    {new Date(exp.startDate).toLocaleDateString()} - 
-                    {exp.current ? ' Actualidad' : ` ${new Date(exp.endDate!).toLocaleDateString()}`}
+                    {formatDateLimaNumeric(exp.startDate)} -
+                    {exp.current ? ' Actualidad' : ` ${formatDateLimaNumeric(exp.endDate!)}`}
                   </p>
                   <p className="mt-2">{exp.description}</p>
                   <div className="mt-2 flex flex-wrap gap-2">
